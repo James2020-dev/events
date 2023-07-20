@@ -1,0 +1,40 @@
+{% extends 'EventsApp/base.html' %}
+
+{% block content %}
+
+<div class="card">
+  <div class="card-header">
+    <strong>{{ event.name }}</strong>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">{{ event.venue }}</h5>
+    <p class="card-text">
+        <ul>
+    <li>Web: {{ event.venue.web }}</li>
+    <li>Date: {{ event.event_date }}</li><li>Days Remaining: {{ event.Days_rem }}</li>
+      <li>Status: {{ event.Is_Days_Past }}</li>
+    <li>Manager: {{ event.manager }}</li>
+    <li>Description: {{ event.description }}</li>
+    <li>Attendees:
+        {% for user in event.attendees.all %}
+        <ul>
+        <li>{{ user }}</li>
+            </ul>
+    {% endfor %}
+      <li>Approved: {{ event.approved_yes_no }}</li>
+</ul>
+      {% if user.is_authenticated %}
+      {% if user == event.manager %}
+    <div class="card-footer text-muted">
+      <a href="{% url 'update_event' event.id %}" class="btn btn-secondary btn-sm">Update</a>
+         <a href="{% url 'delete_event' event.id %}" class="btn btn-danger btn-sm">Delete</a>
+    </div>
+      {% else %}
+      This Event requires Manager to Update or Delete the Event
+      {% endif %}
+      {% endif %}
+  </div>
+</div>
+        <br/>
+
+{% endblock %}

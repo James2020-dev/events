@@ -1,0 +1,40 @@
+{% extends 'EventsApp/base.html' %}
+
+{% block content %}
+{% if searched %}
+You searched for <br/>
+
+<div class="card">
+  <div class="card-header">
+    <strong><h2>VENUES </h2></strong>
+  </div>
+  <div class="card-body">
+    <p class="card-text">
+       <ul>
+      <table class="table table-striped" align="left">
+ <thread>
+     <tr>
+         <th>No</th>
+         <th>Venue</th>
+          <th>Venue List</th>
+     </tr>
+ </thread>
+        {% for venue in venues %}
+        <tr align="left">
+            <th scope="row">{{ forloop.counter }}</th>
+            <td><a href="{% url 'show_venue' venue.id %}"> {{ venue }} </a> </td>
+           <td><a href="{% url 'venue_events' venue.id %}"> List Events </a> </td>
+        </tr>
+         {% endfor %}
+</table>
+
+    </ul>
+            </ul>
+</ul>
+    </p>
+  </div>
+</div>
+{% else %}
+You did not search for anything
+{% endif %}
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'EventsApp/base.html' %}
+
+{% block content %}
+<h1>My Events </h1>
+Oner ID:{{ user_id }}
+
+{% for event in events %}
+{{ event }}<br>
+{% endfor %}
+{% endblock %}

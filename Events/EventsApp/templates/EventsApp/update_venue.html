@@ -1,0 +1,20 @@
+{% extends 'EventsApp/base.html' %}
+
+{% block content %}
+<h1>UPDATE VENUE </h1>
+{{ venue }}
+{% if user.is_authenticated %}
+
+{% if submitted %}
+Submitted Successfully
+{% else %}
+<form method="POST" action="" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Update" class="btn btn-secondary">
+</form>
+
+{% endif %}
+
+{% endif %}
+{% endblock %}

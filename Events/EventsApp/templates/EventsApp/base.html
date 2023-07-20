@@ -1,0 +1,127 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <title>{% block title %}
+      My Blog Page
+      {% endblock %}
+    </title>
+  </head>
+  <body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+  <div class="container">
+    <a class="navbar-brand" href="{% url 'home' %}">My Blog</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+          <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownEventMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Events
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+            <li><a class="dropdown-item" href="{% url 'event_list' %}">All Events</a></li>
+               {% if user.is_authenticated %}
+               {% if user.is_superuser %}
+            <li><a class="dropdown-item" href="{% url 'add_event' %}">Add Event</a></li>
+              <li><a class="dropdown-item" href="{% url 'my-events' %}">My Events</a></li>
+              <li><a class="dropdown-item" href="{% url 'admin_approval' %}">Approve Event</a></li>
+              {% endif %}
+              {% endif %}
+              <li class="nav-item">
+               <a class="nav-link" href="{% url 'search-events' %}">Search Event</a>
+          </li>
+          </ul>
+        </li>
+      </ul>
+
+  <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownVenueMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Venue
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+            <li><a class="dropdown-item" href="{% url 'venue_list' %}">Show Venues</a></li>
+              {% if user.is_authenticated %}
+            <li><a class="dropdown-item" href="{% url 'add_venue' %}">Add Venue</a></li>
+              {% endif %}
+          </ul>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Downloads
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+            <li><a class="dropdown-item" href="{% url 'venue-text' %}">Venue Text</a></li>
+            <li><a class="dropdown-item" href="{% url 'venue-csv' %}">Venue CSV</a></li>
+            <li><a class="dropdown-item" href="{% url 'venue-pdf' %}">Venue PDF</a></li>
+          </ul>
+        </li>
+      </ul>
+
+          {% if user.is_authenticated %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+          </li>
+          {% else %}
+           <li class="nav-item">
+               <a class="nav-link" href="{% url 'login' %}">Login</a>
+          </li>
+           <li class="nav-item">
+               <a class="nav-link" href="{% url 'register_user' %}">Register</a>
+          </li>
+        {% endif %}
+      </ul>
+ <form class="d-flex" method="post", action="{% url 'search-venue' %}">
+   {% csrf_token %}
+        <input class="form-control me-2" type="search" placeholder="Search Venue" name="searched" aria-label="Search">
+        <button class="btn btn-secondary" type="submit">Search</button>
+      </form>
+
+    </div>
+
+  </div>
+
+</nav>
+  <br/>
+  <br/>
+  <div class="container">
+                         {% if messages %}
+      {% for message in messages %}
+
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>{{ message }}</strong>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+      {% endfor %}
+      {% endif %}
+      {% block content %}
+
+  {% endblock %}
+</div>
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>

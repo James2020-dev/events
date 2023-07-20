@@ -1,0 +1,21 @@
+{% extends 'EventsApp/base.html' %}
+
+{% block content %}
+<center>
+<!--Month No:{{ month_number }} {{ time }}<br>-->
+{{ cal|safe }}
+></center>
+<br>
+<h3>Events for this Month</h3>
+{{month }}-{{ year }}  {{ time }}<br>
+{% if event_list %}
+<strong> There are no events for this month</strong>
+{% else %}
+{% for event in Event_list %}
+{{ event }} - {{ event.event_date }}
+{% endfor %}
+{% endif %}
+
+<br><br><br>
+    <p>@copyrght: {{ current_year }} &nbsp; {{ time }}</p>
+{% endblock %}
